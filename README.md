@@ -13,13 +13,18 @@ John Capobianco
 
 4. Ubuntu - If you are using WSL2, please ensure you have Ubuntu installed. You can follow the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install).
 
-5. Virtual Environment - It's a good practice to create a virtual environment for your Python projects. You can do this using the following command:
+6. Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/automateyournetwork/NAF_AC4
+   ```
+
+7. Virtual Environment - It's a good practice to create a virtual environment for your Python projects. You can do this using the following command:
    
    ```bash
    python -m venv venv
    ```
 
-6. Activate the virtual environment:
+8. Activate the virtual environment:
    - On Windows:
      ```bash
      venv\Scripts\activate
@@ -29,25 +34,20 @@ John Capobianco
      source venv/bin/activate
      ```
 
-7. Install VS Code - If you haven't already, download and install Visual Studio Code from [code.visualstudio.com](https://code.visualstudio.com/).
+9. Install VS Code - If you haven't already, download and install Visual Studio Code from [code.visualstudio.com](https://code.visualstudio.com/).
 
-8. Export enviroment variable 
+10. Export enviroment variable 
 
 ```bash
 export OPENAI_API_KEY="Key Provided By John"
 ```
 
-9. Install Required Packages - Use the following command to install the required packages:
+11. Install Required Packages - Use the following command to install the required packages:
     ```bash
-    pip install -r requirements.txt
+    (venv)python3 -m pip install -r requirements.txt
     ```
 
-10. Clone this repository to your local machine:
-   ```bash
-   git clone https://github.com/automateyournetwork/NAF_AC4
-   ```
-
-11. Navigate to the project directory:
+12. Navigate to the project directory:
     ```bash
     cd NAF_AC4
     ```
@@ -56,9 +56,7 @@ export OPENAI_API_KEY="Key Provided By John"
     code .
     ```
 
-13. Optional - Postman - If you want to test the API endpoints, you can use Postman. Download it from [postman.com](https://www.postman.com/downloads/).
-
-14. Cisco DevNet Always On 9k - Get credentials for the Always On Cisco 9k
+13. Cisco DevNet Always On 9k - Get credentials for the Always On Cisco 9k
 
 https://devnetsandbox.cisco.com/DevNet/catalog/Cat9k-Always-On_cat9k-always-on
 
