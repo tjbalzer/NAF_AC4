@@ -4,8 +4,8 @@ import json
 # --- Load testbed file ---
 testbed = load("testbed.yaml")
 
-# --- Connect to R1 ---
-device = testbed.devices["R1"]
+# --- Connect to CAT9k_AO ---
+device = testbed.devices["CAT9k_AO"]
 device.connect(log_stdout=True)
 
 # --- Parse a command ---

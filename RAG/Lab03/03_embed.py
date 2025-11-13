@@ -9,9 +9,9 @@ import os
 
 # --- Step 1: Connect to device and get parsed JSON ---
 testbed = load("testbed.yaml")
-device = testbed.devices["R1"]
+device = testbed.devices["CAT9k_AO"]
 device.connect(log_stdout=True)
-parsed_output = device.parse("show ip route")
+parsed_output = device.parse("show ip interface brief")
 
 # --- Step 2: Write parsed JSON to temp file ---
 with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as tmp:
@@ -52,8 +52,8 @@ embed_2 = embedding.embed_query(text_2)
 similarity = cosine_similarity([embed_1], [embed_2])[0][0]
 print(f"🧠 Cosine similarity between:\n- '{text_1}'\n- '{text_2}'\n→ {similarity:.4f}\n")
 
-# --- STEP 7: Embed First Routing Chunk ---
-print("📘 Embedding first routing chunk...")
+# --- STEP 7: Embed First interface Chunk ---
+print("📘 Embedding first interface chunk...")
 
 first_chunk_text = semantic_chunks[0].page_content
 first_chunk_vector = embedding.embed_query(first_chunk_text)

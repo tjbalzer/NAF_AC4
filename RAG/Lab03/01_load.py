@@ -7,11 +7,11 @@ import os
 
 # --- Step 1: Load testbed and connect to device ---
 testbed = load("testbed.yaml")
-device = testbed.devices["R1"]
+device = testbed.devices["CAT9k_AO"]
 device.connect(log_stdout=True)
 
 # --- Step 2: Parse CLI output to JSON ---
-parsed_output = device.parse("show ip route")
+parsed_output = device.parse("show ip interface brief")
 print("\n✅ Parsed output:\n")
 print(json.dumps(parsed_output, indent=2))
 
