@@ -44,13 +44,10 @@ export OPENAI_API_KEY="Key Provided By John"
 
 11. Install Required Packages - Use the following command to install the required packages:
     ```bash
-    (venv)python3 -m pip install -r requirements.txt
+    (venv)% cd NAF_AC4
+    (venv)NAF_AC4 %python3 -m pip install -r requirements.txt
     ```
 
-12. Navigate to the project directory:
-    ```bash
-    cd NAF_AC4
-    ```
 12. Open the project in Visual Studio Code:
     ```bash
     code .

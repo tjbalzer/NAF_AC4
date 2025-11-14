@@ -9,9 +9,9 @@ import os
 
 # --- Step 1: Connect to device and get parsed JSON ---
 testbed = load("testbed.yaml")
-device = testbed.devices["R1"]
+device = testbed.devices["CAT9k_AO"]
 device.connect(log_stdout=True)
-parsed_output = device.parse("show ip route")
+parsed_output = device.parse("show ip interface brief")
 
 # --- Step 2: Write parsed JSON to temp file ---
 with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as tmp:

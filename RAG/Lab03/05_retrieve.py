@@ -11,9 +11,9 @@ import uuid
 
 # --- Step 1: Connect to device and get parsed JSON ---
 testbed = load("testbed.yaml")
-device = testbed.devices["R1"]
+device = testbed.devices["CAT9k_AO"]
 device.connect(log_stdout=True)
-parsed_output = device.parse("show ip route")
+parsed_output = device.parse("show ip interface brief")
 
 # --- Step 2: Write parsed JSON to temp file ---
 with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as tmp:
@@ -51,10 +51,10 @@ print("📦 Chroma vector store ready and persisted.")
 # --- Method 1: Direct semantic search ---
 print("\n🔎 Method 1: Direct similarity search")
 questions = [
-    "What is the next hop for 192.168.1.0/24?",
-    "Which prefixes are connected interfaces?",
-    "Is there a static route for 10.1.1.0/24?",
-    "Do I have a default route?",
+    "Can I get a summary of my interfaces?",
+    "Which interfaces have IP addresses?",
+    "Do I have any SVIs or Loopback interfaces?",
+    "What interfaces are up/up?",
 ]
 
 for q in questions:
@@ -74,7 +74,7 @@ qa_chain = ConversationalRetrievalChain.from_llm(
 )
 
 chat_history = []
-q2 = "Help me understand my routing table for R1?"
+q2 = "Help me understand my interfaces for CAT9k_AO?"
 response = qa_chain.invoke({"question": q2, "chat_history": chat_history})
 
 print(f"\n🧠 Answer: {response['answer']}\n")

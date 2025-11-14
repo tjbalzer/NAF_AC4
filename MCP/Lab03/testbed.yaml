@@ -1,16 +1,16 @@
 ---
 devices:
-  R1:
+  CAT9k_AO:
     alias: "Sandbox Router01"
     type: "router"
     os: "iosxe"
-    platform: CSR1kv
+    platform: CSCAT9k_AOkv
     credentials:
       default:
-        username: <your username>
-        password: <your password>
+        username: username
+        password: password
       enable:
-        password: <your password>
+        password: password
     connections:
       cli:
         protocol: ssh
