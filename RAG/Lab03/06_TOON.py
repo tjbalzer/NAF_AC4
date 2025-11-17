@@ -103,6 +103,63 @@ testbed = load("testbed.yaml")
 device = testbed.devices["CAT9k_AO"]
 device.connect(log_stdout=True)
 
+pyats_parsed = device.parse("show interfaces")
+
+# Step 2: Convert to TOON
+toon_text, stats = toon_with_stats(pyats_parsed)
+
+print("\n============================")
+print("📦 TOON OUTPUT PREVIEW")
+print("============================\n")
+print(toon_text[:500], "...\n")
+
+print("----------------------------")
+print(stats)
+print("----------------------------\n")
+
+# Step 3: Put TOON text into a temp file so LangChain can load it
+with tempfile.NamedTemporaryFile(delete=False, suffix=".toon", mode="w") as tmp:
+    tmp.write(toon_text)
+    tmp_path = tmp.name
+
+# Step 4: Load TOON as a single text document
+loader = TextLoader(tmp_path)
+documents = loader.load()
+os.remove(tmp_path)
+
+# Step 5: Embed & semantic split
+embedding = OpenAIEmbeddings(model="text-embedding-3-small")
+splitter = SemanticChunker(embedding)
+chunks = splitter.split_documents(documents)
+
+# Step 6: Chroma vector store
+session_id = str(uuid.uuid4())
+persist_path = f"chroma_toon_{session_id}"
+
+vector_store = Chroma.from_documents(
+    chunks,
+    embedding,
+    persist_directory=persist_path
+)
+vector_store.persist()
+
+print("📦 Chroma vector store (TOON-based) ready.\n")
+
+# Step 7: Conversational Retrieval QA
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+qa_chain = ConversationalRetrievalChain.from_llm(
+    llm=llm,
+    retriever=vector_store.as_retriever(search_kwargs={"k": 5}),
+    return_source_documents=True
+)
+
+chat_history = []
+question = "Provide a summary of all my interfaces."
+response = qa_chain.invoke({"question": question, "chat_history": chat_history})
+
+print("🧠 LLM Answer:\n", response["answer"])
+print("\n📚 Source Snippet:\n", response["source_documents"][0].page_content[:300])
+
 pyats_parsed = device.parse("show ip interface brief")
 
 # Step 2: Convert to TOON
@@ -155,6 +212,63 @@ qa_chain = ConversationalRetrievalChain.from_llm(
 
 chat_history = []
 question = "Provide a summary of all my interfaces."
+response = qa_chain.invoke({"question": question, "chat_history": chat_history})
+
+print("🧠 LLM Answer:\n", response["answer"])
+print("\n📚 Source Snippet:\n", response["source_documents"][0].page_content[:300])
+
+pyats_parsed = device.parse("show version")
+
+# Step 2: Convert to TOON
+toon_text, stats = toon_with_stats(pyats_parsed)
+
+print("\n============================")
+print("📦 TOON OUTPUT PREVIEW")
+print("============================\n")
+print(toon_text[:500], "...\n")
+
+print("----------------------------")
+print(stats)
+print("----------------------------\n")
+
+# Step 3: Put TOON text into a temp file so LangChain can load it
+with tempfile.NamedTemporaryFile(delete=False, suffix=".toon", mode="w") as tmp:
+    tmp.write(toon_text)
+    tmp_path = tmp.name
+
+# Step 4: Load TOON as a single text document
+loader = TextLoader(tmp_path)
+documents = loader.load()
+os.remove(tmp_path)
+
+# Step 5: Embed & semantic split
+embedding = OpenAIEmbeddings(model="text-embedding-3-small")
+splitter = SemanticChunker(embedding)
+chunks = splitter.split_documents(documents)
+
+# Step 6: Chroma vector store
+session_id = str(uuid.uuid4())
+persist_path = f"chroma_toon_{session_id}"
+
+vector_store = Chroma.from_documents(
+    chunks,
+    embedding,
+    persist_directory=persist_path
+)
+vector_store.persist()
+
+print("📦 Chroma vector store (TOON-based) ready.\n")
+
+# Step 7: Conversational Retrieval QA
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+qa_chain = ConversationalRetrievalChain.from_llm(
+    llm=llm,
+    retriever=vector_store.as_retriever(search_kwargs={"k": 5}),
+    return_source_documents=True
+)
+
+chat_history = []
+question = "Provide a summary of all device IOS version."
 response = qa_chain.invoke({"question": question, "chat_history": chat_history})
 
 print("🧠 LLM Answer:\n", response["answer"])
