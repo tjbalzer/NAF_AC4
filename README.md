@@ -46,6 +46,7 @@ export OPENAI_API_KEY="Key Provided By John"
     ```bash
     (venv)% cd NAF_AC4
     (venv)NAF_AC4 %python3 -m pip install -r requirements.txt
+    (vent)NAF_AC4 npm install -g @toon-format/cli
     ```
 
 12. Open the project in Visual Studio Code:

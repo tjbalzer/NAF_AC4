@@ -20,7 +20,7 @@ Control-C to stop the server if you started it manually.
 Now run the client to interact with the multiplication agent. Execute the following command in a new terminal window:
 
 ```bash
-python3 client.py
+python3 agent.py
 ```
 
 You should see the client discover the server and now you can send two numbers to multiply.

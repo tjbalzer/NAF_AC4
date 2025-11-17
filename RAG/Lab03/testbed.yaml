@@ -7,10 +7,10 @@ devices:
     platform: CSCAT9k_AOkv
     credentials:
       default:
-        username: username
-        password: password
+        username: ptcapo
+        password: 3NaR_-f3s0En
       enable:
-        password: password
+        password: 3NaR_-f3s0En
     connections:
       cli:
         protocol: ssh
